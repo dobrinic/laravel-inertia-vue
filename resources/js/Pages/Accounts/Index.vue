@@ -1,7 +1,10 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Link, Head } from '@inertiajs/vue3';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Link, Head } from '@inertiajs/vue3';
 
+    defineProps({
+        accounts: Array
+    })
 </script>
 
 <template>
@@ -32,16 +35,16 @@ import { Link, Head } from '@inertiajs/vue3';
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                                <tr v-for="account in accounts" :key="account.id">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ account.name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ account.country }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ account.town_city }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ account.phone }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <Link :href="route('accounts.show', account.id)" class="cursor-pointer text-indigo-600 hover:text-indigo-900">View</Link>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <InertiaLink :href="route('accounts.edit', account.id)" class="cursor-pointer text-indigo-600 hover:text-indigo-900">Edit</InertiaLink>
+                                        <Link :href="route('accounts.edit', account.id)" class="cursor-pointer text-indigo-600 hover:text-indigo-900">Edit</Link>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -53,3 +56,14 @@ import { Link, Head } from '@inertiajs/vue3';
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<!-- <script>
+    export default {
+        props: {
+            accounts: {
+                type: Array,
+                required: true
+            }
+        }
+    }
+</script> -->

@@ -23,6 +23,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
+        "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/vue3": "^1.0.15"
     }
 }
