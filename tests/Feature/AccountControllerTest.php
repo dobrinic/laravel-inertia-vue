@@ -78,7 +78,7 @@ class AccountControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertInertia(fn (AssertableInertia $page) => $page
             ->component('Accounts/Create')
-            ->has('users')
+            ->has('owners')
         );
     }
 
@@ -96,16 +96,6 @@ class AccountControllerTest extends TestCase
             ->has('account', fn (AssertableInertia $account) => $account
                 ->where('name', $this->account->name)
                 ->etc()
-            )
-            ->has('owner', fn (AssertableInertia $owner) => $owner
-                ->where('id', $this->user->id)
-                ->etc()
-            )
-            ->has('contacts', fn (AssertableInertia $page) => $page
-                ->each(fn (AssertableInertia $contact) => $contact
-                    ->where('account_id', $this->account->id)
-                    ->etc()
-                )
             )
         );
     }
@@ -125,7 +115,7 @@ class AccountControllerTest extends TestCase
                 ->where('name', $this->account->name)
                 ->etc()
             )
-            ->has('users')
+            ->has('owners')
         );
     }
 
@@ -163,7 +153,13 @@ class AccountControllerTest extends TestCase
         $this->actingAs($this->user);
 
         $this->put(route('accounts.update', $this->account->id), [
-            'name' => 'Test account'
+            'name' => 'Test account',
+            'address' => 'address',
+            'town_city' => 'town',
+            'country' => 'country',
+            'post_code' => 'post code',
+            'phone' => 'phone',
+            'owner_id' => $this->user->id
         ])
             ->assertRedirect()
             ->assertSessionDoesntHaveErrors();
